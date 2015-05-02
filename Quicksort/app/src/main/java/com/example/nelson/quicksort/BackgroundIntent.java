@@ -3,25 +3,17 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
-import android.text.TextUtils;
 import android.util.Log;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import java.lang.reflect.Array;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+
 /**
- * Created by nelson on 29/04/15.
+ * Created by nelson on 01/05/15.
  */
 public class BackgroundIntent extends IntentService {
-
     public static final int STATUS_RUNNING = 0;
     public static final int STATUS_FINISHED = 1;
     public static final int STATUS_ERROR = 2;
@@ -31,6 +23,9 @@ public class BackgroundIntent extends IntentService {
     public BackgroundIntent() {
         super(BackgroundIntent.class.getName());
     }
+
+    private static int N;
+
     public void quickSort(int[] arr, int low, int high) {
 
         if (arr == null || arr.length == 0)
@@ -71,7 +66,7 @@ public class BackgroundIntent extends IntentService {
             quickSort(arr, i, high);
     }
 
-    static final int MAX_VALUE = 10;
+    static final int MAX_VALUE = 100000000;
     int data[] = new int[MAX_VALUE];
 
 
@@ -83,6 +78,7 @@ public class BackgroundIntent extends IntentService {
         }
     }
 
+
     @Override
     protected void onHandleIntent(Intent intent) {
 
@@ -92,15 +88,13 @@ public class BackgroundIntent extends IntentService {
 
         Bundle bundle = new Bundle();
 
-        /* Service Started */
+ /* Service Started */
         receiver.send(STATUS_RUNNING, Bundle.EMPTY);
         try {
 
             long start = System.nanoTime();
             generarNuevoArreglo();
-            int min = 0;
-            int max = data.length-1;
-            quickSort(data,min,max);
+            quickSort(data,0,data.length-1);
             long end = System.nanoTime();
 
             long elapsedTime = end - start;
@@ -121,4 +115,3 @@ public class BackgroundIntent extends IntentService {
         this.stopSelf();
     }
 }
-

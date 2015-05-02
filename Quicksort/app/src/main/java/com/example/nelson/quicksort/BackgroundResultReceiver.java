@@ -3,9 +3,8 @@ package com.example.nelson.quicksort;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-
 /**
- * Created by nelson on 29/04/15.
+ * Created by nelson on 01/05/15.
  */
 public class BackgroundResultReceiver extends ResultReceiver {
     private Receiver mReceiver;

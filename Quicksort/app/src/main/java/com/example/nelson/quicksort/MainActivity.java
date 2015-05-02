@@ -1,6 +1,5 @@
 package com.example.nelson.quicksort;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -20,21 +20,15 @@ import java.util.Random;
 import android.os.Handler;
 
 
+import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity implements BackgroundResultReceiver.Receiver {
+
     private TextView batteryTxt;
-
-
     private BackgroundResultReceiver mReceiver;
     TextView msg1;
     TextView msg2;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
 
     private void getBatteryPercentage() {
         BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
@@ -54,28 +48,6 @@ public class MainActivity extends ActionBarActivity implements BackgroundResultR
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void onReceiveResult(int resultCode, Bundle resultData) {
         switch (resultCode) {
             case BackgroundIntent.STATUS_RUNNING:
@@ -97,23 +69,100 @@ public class MainActivity extends ActionBarActivity implements BackgroundResultR
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();
                 break;
         }
+    }
 
+    public void onClick(View v) {
+
+        mySort();
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        msg1 = (TextView) findViewById(R.id.msg1);
+        msg2 = (TextView) findViewById(R.id.msg2);
+        batteryTxt = (TextView) findViewById(R.id.batteryTxt);
+        getBatteryPercentage();
 
     }
-    public void onClick(View view){ ejecutarQuickSort(); };
 
-    public void ejecutarQuickSort() {
-
-
-          /* Starting Download Service */
+    public void mySort() {
+     /* Starting Download Service */
         mReceiver = new BackgroundResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         Intent intent = new Intent(Intent.ACTION_SYNC, null, this, BackgroundIntent.class);
 
-        /* Send optional extras to Download IntentService */
         intent.putExtra("receiver", mReceiver);
 
         startService(intent);
 
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+
+
+    public void quickSort(int[] arr, int low, int high) {
+
+        if (arr == null || arr.length == 0)
+            return;
+
+        if (low >= high)
+            return;
+
+        //pick the pivot
+        int middle = low + (high - low) / 2;
+        int pivot = arr[middle];
+
+        //make left < pivot and right > pivot
+        int i = low, j = high;
+        while (i <= j) {
+            while (arr[i] < pivot) {
+                i++;
+            }
+
+            while (arr[j] > pivot) {
+                j--;
+            }
+
+            if (i <= j) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                i++;
+                j--;
+            }
+        }
+
+        //recursively sort two sub parts
+        if (low < j)
+            quickSort(arr, low, j);
+
+        if (high > i)
+            quickSort(arr, i, high);
     }
 }
