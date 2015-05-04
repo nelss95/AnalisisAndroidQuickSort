@@ -1,4 +1,4 @@
-package com.example.nelson.quicksort;
+package com.example.nelson.quicksortv20;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,10 +20,8 @@ import java.util.Random;
 import android.os.Handler;
 
 
-import java.util.Date;
-
-
 public class MainActivity extends ActionBarActivity implements BackgroundResultReceiver.Receiver {
+
 
     private TextView batteryTxt;
     private BackgroundResultReceiver mReceiver;
@@ -59,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements BackgroundResultR
             case BackgroundIntent.STATUS_FINISHED:
                 /* Hide progress & extract result from bundle */
                 setProgressBarIndeterminateVisibility(false);
-                String exectime = resultData.getString("exectime", "No Info");
+                String exectime = resultData.getString("exectime","No Info");
                 msg2.setText("Finalizado @" + new Date().toString() + " tomo " + exectime);
                 getBatteryPercentage();
                 break;
@@ -88,7 +86,8 @@ public class MainActivity extends ActionBarActivity implements BackgroundResultR
 
     }
 
-    public void mySort() {
+    public void mySort()
+    {
      /* Starting Download Service */
         mReceiver = new BackgroundResultReceiver(new Handler());
         mReceiver.setReceiver(this);
@@ -100,7 +99,6 @@ public class MainActivity extends ActionBarActivity implements BackgroundResultR
 
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -125,8 +123,8 @@ public class MainActivity extends ActionBarActivity implements BackgroundResultR
     }
 
 
-
-    public void quickSort(int[] arr, int low, int high) {
+    /* Sort Function */
+    public static void quickSort(int[] arr, int low, int high) {
 
         if (arr == null || arr.length == 0)
             return;

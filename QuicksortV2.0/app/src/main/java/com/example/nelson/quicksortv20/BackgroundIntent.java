@@ -1,4 +1,5 @@
-package com.example.nelson.quicksort;
+package com.example.nelson.quicksortv20;
+
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +11,8 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
-/**
- * Created by nelson on 01/05/15.
- */
 public class BackgroundIntent extends IntentService {
+
     public static final int STATUS_RUNNING = 0;
     public static final int STATUS_FINISHED = 1;
     public static final int STATUS_ERROR = 2;
@@ -24,9 +23,9 @@ public class BackgroundIntent extends IntentService {
         super(BackgroundIntent.class.getName());
     }
 
-    private static int N;
 
-    public void quickSort(int[] arr, int low, int high) {
+    /* Sort Function */
+    public static void quickSort(int[] arr, int low, int high) {
 
         if (arr == null || arr.length == 0)
             return;
@@ -66,7 +65,7 @@ public class BackgroundIntent extends IntentService {
             quickSort(arr, i, high);
     }
 
-    static final int MAX_VALUE = 100000000;
+    static final int MAX_VALUE = 10000000;
     int data[] = new int[MAX_VALUE];
 
 

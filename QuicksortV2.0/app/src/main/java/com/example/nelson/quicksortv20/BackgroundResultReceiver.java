@@ -1,11 +1,9 @@
-package com.example.nelson.quicksort;
+package com.example.nelson.quicksortv20;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-/**
- * Created by nelson on 01/05/15.
- */
+
 public class BackgroundResultReceiver extends ResultReceiver {
     private Receiver mReceiver;
 

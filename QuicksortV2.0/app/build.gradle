@@ -5,8 +5,8 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.example.nelson.quicksort"
-        minSdkVersion 15
+        applicationId "com.example.nelson.quicksortv20"
+        minSdkVersion 17
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
