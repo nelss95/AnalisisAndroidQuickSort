@@ -65,7 +65,7 @@ public class BackgroundIntent extends IntentService {
             quickSort(arr, i, high);
     }
 
-    static final int MAX_VALUE = 10000000;
+    static final int MAX_VALUE = 2000000;
     int data[] = new int[MAX_VALUE];
 
 
@@ -92,8 +92,10 @@ public class BackgroundIntent extends IntentService {
         try {
 
             long start = System.nanoTime();
-            generarNuevoArreglo();
-            quickSort(data,0,data.length-1);
+            for (int i=0;i<1000;i++) {
+                generarNuevoArreglo();
+                quickSort(data, 0, data.length - 1);
+            }
             long end = System.nanoTime();
 
             long elapsedTime = end - start;
